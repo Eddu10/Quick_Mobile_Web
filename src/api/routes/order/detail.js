@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
-const handler = require('../../handlers/establishment/detail');
+const handler = require('../../handlers/order/detail');
 const pre = require('../../pre/establishment');
 
 const resultModel = Joi.object({

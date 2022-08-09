@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
-const handler = require('../../handlers/establishment/list');
+const handler = require('../../handlers/order/list');
 
 const resultModel = Joi.array()
 	.items(

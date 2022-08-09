@@ -3,24 +3,27 @@
 const baseModel = require('./base');
 const helper = require('./helper');
 
-class DigitalCert extends baseModel {
+class ElectronicDocument extends baseModel {
 	static get tableName() {
-		return 'DigitalCert';
+		return 'Order';
 	}
 
 	static get jsonSchema() {
 		const defaultProperties = helper.defaultFields();
 		const schema = {
 			type: 'object',
-			required: ['password', 'digital_cert'],
+			required: ['description', 'date', 'price', 'user_id'],
 			properties: {
-				password: {
+				description: {
 					type: 'string',
 				},
-				digital_cert: {
-					type: 'string',
+				date: {
+					type: 'object',
 				},
-				company_id: {
+				price: {
+					type: 'number',
+				},
+				user_id: {
 					type: 'number',
 				},
 				...defaultProperties,
@@ -36,7 +39,7 @@ class DigitalCert extends baseModel {
 	}
 
 	static defaultColumns() {
-		return ['id', 'password','digital_cert', 'company_id'];
+		return ['id', 'description', 'date', 'price', 'user_id'];
 	}
 
 	static getById(id) {
@@ -51,9 +54,9 @@ class DigitalCert extends baseModel {
 		return this.query()
 			.select(this.defaultColumns())
 			.skipUndefined()
-			.where('password', filter.password)
+			.where('date', filter.date)
 			.skipUndefined()
-			.where('digital_cert', filter.digital_cert)
+			.where('user_id', filter.user_id)
 			.hapiFilter(filter);
 	}
 
@@ -65,20 +68,14 @@ class DigitalCert extends baseModel {
 		return this.query().patch(data).where('id', id);
 	}
 
-	static findByPassword(password) {
+	static findByUserId(user_id) {
 		return this.query()
-			.select(['id','company_id'])
-			.where('password', password)
+			.select(['id', 'description', 'user_id'])
+			.where('user_id', user_id)
 			.first();
 	}
-	static getCompanyCertId(id) {
-        return this.query()
-            .select(['id'])
-            .where('id', id)
-			.first();
-    }
-	
+
 	
 }
 
-module.exports = DigitalCert;
+module.exports = Order;

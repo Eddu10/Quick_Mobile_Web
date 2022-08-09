@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
-const handler = require('../../handlers/establishment/delete');
+const handler = require('../../handlers/order/delete');
 const pre = require('../../pre/establishment');
 
 const unauthorizedModel = Joi.object({

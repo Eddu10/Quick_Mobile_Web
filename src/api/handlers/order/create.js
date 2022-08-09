@@ -1,19 +1,19 @@
 'use strict';
 
 const Boom = require('@hapi/boom');
-const Establishment = require('../../../models/Establishment');
+const Order = require('../../../models/Order');
 
 const saltRounds = process.env.SALT_ROUNDS || 10;
 
 async function handler(request, h) {
 	try {
-		var newEstablishment = null;
+		var newOrder = null;
 		var data = request.payload;
 
-		newEstablishment = await Establishment.create(data);
+		newOrder = await Order.create(data);
 
-		if (newEstablishment) {
-			return h.response(newEstablishment).code(201);
+		if (newOrder) {
+			return h.response(newOrder).code(201);
 		}
 	} catch (error) {
 		return Boom.badImplementation(error, error);

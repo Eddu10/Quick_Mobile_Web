@@ -52,9 +52,9 @@ const plugins = [
 		},
 	},
 	{
-		plugin: establishmentRoute,
+		plugin: orderRoute,
 		routes: {
-			prefix: '/establishment',
+			prefix: '/order',
 		},
 	},
 	{

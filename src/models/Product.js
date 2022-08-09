@@ -3,31 +3,28 @@
 const baseModel = require('./base');
 const helper = require('./helper');
 
-class Establishment extends baseModel {
+class Company extends baseModel {
 	static get tableName() {
-		return 'Establishment';
+		return 'Product';
 	}
 
 	static get jsonSchema() {
 		const defaultProperties = helper.defaultFields();
 		const schema = {
 			type: 'object',
-			required: ['number', 'company_id'],
+			required: ['name', 'description', 'price',],
 			properties: {
-				number: {
+				name: {
 					type: 'string',
-				},
-				address: {
-					type: 'string',
-				},
-				comopany_id: {
-					type: 'integer',
 				},
 				company_name: {
 					type: 'string',
 				},
-				state: {
+				description: {
 					type: 'string',
+				},
+				price: {
+					type: 'number',
 				},
 				...defaultProperties,
 			},
@@ -42,7 +39,7 @@ class Establishment extends baseModel {
 	}
 
 	static defaultColumns() {
-		return ['id', 'number', 'address', 'company_id', 'company_name', 'state'];
+		return ['id', 'name','description','price'];
 	}
 
 	static getById(id) {
@@ -56,6 +53,10 @@ class Establishment extends baseModel {
 	static getAll(filter = {}) {
 		return this.query()
 			.select(this.defaultColumns())
+			.skipUndefined()
+			.where('name', filter.name)
+			.skipUndefined()
+			.where('id', filter.id)
 			.hapiFilter(filter);
 	}
 
@@ -67,12 +68,18 @@ class Establishment extends baseModel {
 		return this.query().patch(data).where('id', id);
 	}
 
-	static findByNumber(number) {
-		return this.query()
-			.select(['id', 'number'])
-			.where('number', number)
-			.first();
-	}
+	static getProductId(id) {
+        return this.query()
+            .select(['id'])
+            .where('id', id)
+    } 
+
+	// static getProductName(name) {
+	// 	return this.query()
+	// 		.select(['id', 'name'])
+	// 		.where('name', name)
+	// 		.first();
+	// }
 }
 
-module.exports = Establishment;
+module.exports = Product;

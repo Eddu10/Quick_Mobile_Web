@@ -2,21 +2,20 @@
 
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
-const handler = require('../../handlers/establishment/create');
-const pre = require('../../pre/establishment');
+const handler = require('../../handlers/order/create');
+//const pre = require('../../pre/order');
 
 const resultModel = Joi.object({
-	number: Joi.string(),
-	address: Joi.string(),
-	company_id: Joi.number(),
-	company_name: Joi.string(),
-    state: Joi.string(),
+	description: Joi.string(),
+	date: Joi.date(),
+	price: Joi.number(),
+	user_id: Joi.number(),
 	deletedAt: Joi.string(),
 	flagActive: Joi.boolean(),
 	createdAt: Joi.string(),
 	updatedAt: Joi.string(),
 	id: Joi.number(),
-}).label('Created Establishment');
+}).label('Created Order');
 
 const unauthorizedModel = Joi.object({
 	statusCode: Joi.number(),
@@ -67,8 +66,8 @@ const route = {
 	method: 'POST',
 	path: '/',
 	options: {
-		description: 'Create establishment',
-		notes: 'Create an establishment and return the created object',
+		description: 'Create order',
+		notes: 'Create an order and return the created object',
 		tags: ['api'],
 		plugins: {
 			'hapi-swagger': {
@@ -76,22 +75,21 @@ const route = {
 				payloadType: 'form',
 			},
 		},
-		pre: [
-			{
-				method: pre.validateByNumber,
-			},
-			{
-				method: pre.validationByCompanyId,
-			},
-		],
+		// pre: [
+		// 	{
+		// 		method: pre.validateByNumber,
+		// 	},
+		// 	{
+		// 		method: pre.validationByCompanyId,
+		// 	},
+		// ],
 		validate: {
 			failAction,
 			payload: Joi.object({
-				number: Joi.string().required().max(10),
-				address: Joi.string().max(100),
-				company_id: Joi.number().required(),
-				company_name: Joi.string().max(50),
-				state: Joi.string().max(10),
+				description: Joi.string().required(),
+				date: Joi.date().required(),
+				price: Joi.number().required(),
+				user_id: Joi.number().required(),
 			}),
 		},
 	},

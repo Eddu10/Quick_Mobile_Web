@@ -23,11 +23,8 @@ class User extends baseModel {
 				email: {
 					type: ['string', 'null'],
 				},
-				group: {
+				phone_number: {
 					type: ['string', 'null'],
-				},
-				description: {
-					type: 'string',
 				},
 				...defaultProperties,
 			},
@@ -42,7 +39,7 @@ class User extends baseModel {
 	}
 
 	static defaultColumns() {
-		return ['id', 'username', 'email', 'group', 'description'];
+		return ['id', 'username', 'email', 'phone_number'];
 	}
 
 	static getById(id) {
@@ -58,8 +55,6 @@ class User extends baseModel {
 			.select(this.defaultColumns())
 			.skipUndefined()
 			.where('username', filter.username)
-			.skipUndefined()
-			.where('group', filter.group)
 			.hapiFilter(filter);
 	}
 
@@ -73,7 +68,7 @@ class User extends baseModel {
 
 	static findByUsername(username) {
 		return this.query()
-			.select(['id', 'username', 'password', 'group'])
+			.select(['id', 'username', 'password', 'phone_number'])
 			.where('username', username)
 			.first();
 	}
