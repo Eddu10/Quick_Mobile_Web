@@ -3,7 +3,7 @@
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
 const handler = require('../../handlers/user/delete');
-const pre = require('../../pre/user');
+//const pre = require('../../pre/user');
 
 const unauthorizedModel = Joi.object({
 	statusCode: Joi.number(),
@@ -51,11 +51,11 @@ const route = {
 			},
 		},
 		tags: ['api'],
-		pre: [
-			{
-				method: pre.validateById,
-			},
-		],
+		// pre: [
+		// 	{
+		// 		method: pre.validateById,
+		// 	},
+		// ],
 		validate: {
 			failAction,
 			params: Joi.object({

@@ -2,26 +2,18 @@
 
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
-const handler = require('../../handlers/electronicDocument/list');
+const handler = require('../../handlers/product/list');
 
 const resultModel = Joi.array()
 	.items(
 		Joi.object({
 			id: Joi.number(),
-			company_id: Joi.number(),
-            doc_number: Joi.string(),
-            access_key: Joi.string(),
-            auth_number: Joi.string(),
-            xml_content: Joi.string(),
-            state: Joi.string(),
-            auth_date: Joi.date(),
-            last_attempt_date: Joi.date(),
-            attempt_number: Joi.number(),
-            issue_date: Joi.date(),
-            xml_auth: Joi.string(),
-		}).label('Electronic Document'),
+			name: Joi.string(),
+			description: Joi.string(),
+			price: Joi.number(),
+		}).label('Product'),
 	)
-	.label('Electronic Documents');
+	.label('Product');
 
 const unauthorizedModel = Joi.object({
 	statusCode: Joi.number(),
@@ -62,8 +54,8 @@ const route = {
 	method: 'GET',
 	path: '/',
 	options: {
-		description: 'List electronic documents',
-		notes: 'Returns a list of electronic documents filtered by params',
+		description: 'List Poduct',
+		notes: 'Returns a list of a products',
 		plugins: {
 			'hapi-swagger': {
 				responses: resultHTTPStatus,
@@ -73,17 +65,9 @@ const route = {
 		validate: {
 			failAction,
 			query: Joi.object({
-				company_id: Joi.number(),
-				doc_number: Joi.string(),
-				access_key: Joi.string(),
-				auth_number: Joi.string(),
-				xml_content: Joi.string().allow(null),
-				state: Joi.string(),
-				auth_date: Joi.date(),
-				last_attempt_date: Joi.date(),
-				attempt_number: Joi.number(),
-				issue_date: Joi.date(),
-				xml_auth: Joi.string().allow(null),
+				name: Joi.string(),
+				description: Joi.string(),
+                price: Joi.number(),
 			}),
 		},
 	},

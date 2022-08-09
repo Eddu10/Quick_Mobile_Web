@@ -3,20 +3,19 @@
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
 const handler = require('../../handlers/order/detail');
-const pre = require('../../pre/establishment');
+//const pre = require('../../pre/establishment');
 
 const resultModel = Joi.object({
 	id: Joi.number(),
-    number: Joi.string(),
-    address: Joi.string(),
-    company_id: Joi.number(),
-    company_name: Joi.string(),
-    state: Joi.string(),
+    description: Joi.string(),
+    date: Joi.date(),
+    price: Joi.number(),
+    user_id: Joi.number(),
 	flagActive: Joi.boolean(),
 	deletedAt: Joi.string(),
 	createdAt: Joi.string(),
 	updatedAt: Joi.string(),
-}).label('Establishment Detail');
+}).label('Order Detail');
 
 const unauthorizedModel = Joi.object({
 	statusCode: Joi.number(),
@@ -57,19 +56,19 @@ const route = {
 	method: 'GET',
 	path: '/{id}',
 	options: {
-		description: 'Detail establishment',
-		notes: 'Returns the detail of a establishments',
+		description: 'Detail order',
+		notes: 'Returns the detail of an order',
 		plugins: {
 			'hapi-swagger': {
 				responses: resultHTTPStatus,
 			},
 		},
 		tags: ['api'],
-		pre: [
-			{
-				method: pre.validateById,
-			},
-		],
+		// pre: [
+		// 	{
+		// 		method: pre.validateById,
+		// 	},
+		// ],
 		validate: {
 			failAction,
 			params: Joi.object({

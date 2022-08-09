@@ -1,13 +1,12 @@
 'use strict';
 
 const Boom = require('@hapi/boom');
-const ElectronicDocument = require('../../../models/ElectronicDocument');
+const Product = require('../../../models/Product');
 
 async function handler(request) {
 	try {
-		let data = request.payload;
-		await ElectronicDocument.edit(request.params.id, data);
-		return "SUCCESS";
+		const list = await Product.getAll(request.query);
+		return list;
 	} catch (error) {
 		return Boom.badImplementation(error, error);
 	}

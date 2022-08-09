@@ -8,14 +8,13 @@ const resultModel = Joi.array()
 	.items(
 		Joi.object({
 			id: Joi.number(),
-			number: Joi.string(),
-			address: Joi.string(),
-			company_id: Joi.number(),
-			company_name: Joi.string(),
-            state: Joi.string(),
-		}).label('Establishment'),
+			description: Joi.string(),
+			date: Joi.date(),
+			price: Joi.number(),
+			user_id: Joi.number(),
+		}).label('Order'),
 	)
-	.label('Establishment');
+	.label('Order');
 
 const unauthorizedModel = Joi.object({
 	statusCode: Joi.number(),
@@ -56,8 +55,8 @@ const route = {
 	method: 'GET',
 	path: '/',
 	options: {
-		description: 'List establishments',
-		notes: 'Returns a list of establishments filtered by params',
+		description: 'List order',
+		notes: 'Returns a list of an orders',
 		plugins: {
 			'hapi-swagger': {
 				responses: resultHTTPStatus,
@@ -67,10 +66,9 @@ const route = {
 		validate: {
 			failAction,
 			query: Joi.object({
-				number: Joi.string(),
-				address: Joi.string(),
-                company_name: Joi.string().allow(null),
-                state: Joi.string(),
+				description: Joi.string(),
+				date: Joi.date(),
+                price: Joi.number(),
 			}),
 		},
 	},

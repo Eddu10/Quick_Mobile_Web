@@ -2,8 +2,8 @@
 
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
-const handler = require('../../handlers/company/patch');
-const pre = require('../../pre/company');
+const handler = require('../../handlers/product/delete');
+//const pre = require('../../pre/order');
 
 const unauthorizedModel = Joi.object({
 	statusCode: Joi.number(),
@@ -21,7 +21,7 @@ const errorModel = Joi.object({
 }).label('Error');
 
 const resultHTTPStatus = {
-	200: {
+	204: {
 		description: 'Success',
 	},
 	400: {
@@ -40,38 +40,26 @@ const resultHTTPStatus = {
 
 const route = {
 	handler,
-	method: 'PATCH',
+	method: 'DELETE',
 	path: '/{id}',
 	options: {
-		description: 'Edit company',
-		notes: 'Edits a company and returns ok if success',
+		description: 'Delete prodcut',
+		notes: 'Deletes an product',
 		plugins: {
 			'hapi-swagger': {
 				responses: resultHTTPStatus,
 			},
 		},
 		tags: ['api'],
-		pre: [
-			{
-				method: pre.validateById,
-			},
-		],
+		// pre: [
+		// 	{
+		// 		method: pre.validateById,
+		// 	},
+		// ],
 		validate: {
 			failAction,
-			payload: Joi.object({
-				id_number: Joi.string().required().max(13),
-				company_name: Joi.string().required().max(100),
-				trade_name: Joi.string().required().max(100),
-                address: Joi.string().max(100),
-				fiscal_position: Joi.string().max(100),
-				account_obligated: Joi.string().max(100),
-                logo: Joi.string(),
-                phone: Joi.string().max(15),
-                email: Joi.string().max(50).email({ tlds: { allow: false } }),
-				description: Joi.string(),
-				max_ammount: Joi.number(),
-				enviroment: Joi.string(),
-				attempts_number: Joi.number(),
+			params: Joi.object({
+				id: Joi.number().required(),
 			}),
 		},
 	},

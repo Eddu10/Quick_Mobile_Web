@@ -2,27 +2,19 @@
 
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
-const handler = require('../../handlers/electronicDocument/create');
-const pre = require('../../pre/electronicDocument');
+const handler = require('../../handlers/product/create');
+//const pre = require('../../pre/order');
 
 const resultModel = Joi.object({
-	company_id: Joi.number(),
-	doc_number: Joi.string(),
-	access_key: Joi.string(),
-	auth_number: Joi.string(),
-    xml_content: Joi.string(),
-    state: Joi.string(),
-    auth_date: Joi.date(),
-    last_attempt_date: Joi.date(),
-    attempt_number: Joi.number(),
-    issue_date: Joi.date(),
-    xml_auth: Joi.string(),
+	name: Joi.string(),
+	description: Joi.string(),
+	price: Joi.number(),
 	deletedAt: Joi.string(),
 	flagActive: Joi.boolean(),
 	createdAt: Joi.string(),
 	updatedAt: Joi.string(),
 	id: Joi.number(),
-}).label('Created Electronic Document');
+}).label('Created Order');
 
 const unauthorizedModel = Joi.object({
 	statusCode: Joi.number(),
@@ -73,8 +65,8 @@ const route = {
 	method: 'POST',
 	path: '/',
 	options: {
-		description: 'Create electronic document',
-		notes: 'Create an electronic document and return the created object',
+		description: 'Create product',
+		notes: 'Create an product and return the created object',
 		tags: ['api'],
 		plugins: {
 			'hapi-swagger': {
@@ -82,40 +74,23 @@ const route = {
 				payloadType: 'form',
 			},
 		},
-		pre: [
-			{
-				method: pre.validationByCompanyId,
-			},
-
-			{
-				method: pre.validateByDocNumber,
-			},
-
-			{
-				method: pre.validateByAccessKey,
-			},
-
-			{
-				method: pre.validateByAuthNumber,
-			},
-		],
+		// pre: [
+		// 	{
+		// 		method: pre.validateByNumber,
+		// 	},
+		// 	{
+		// 		method: pre.validationByCompanyId,
+		// 	},
+		// ],
 		validate: {
 			failAction,
 			payload: Joi.object({
-				company_id: Joi.number().required(),
-				doc_number: Joi.string().required().max(50),
-				access_key: Joi.string().required().max(50),
-				auth_number: Joi.string().required().max(50),
-				xml_content: Joi.string(),
-				state: Joi.string().max(10),
-				auth_date: Joi.date(),
-				last_attempt_date: Joi.date(),
-				attempt_number: Joi.number(),
-				issue_date: Joi.date(),
-				xml_auth: Joi.string(),
+				name: Joi.string().required(),
+				description: Joi.string().required(),
+				price: Joi.number().required(),
 			}),
 		},
 	},
 };
 
-module.exports = route;
+module.exports = route; 

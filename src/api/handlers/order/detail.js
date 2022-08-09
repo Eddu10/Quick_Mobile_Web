@@ -1,13 +1,13 @@
 'use strict';
 
 const Boom = require('@hapi/boom');
-const Establishment = require('../../../models/Establishment');
+const Order = require('../../../models/Order');
 
 async function handler(request) {
 	try {
 		const { id } = request.params;
-		const establishment = await Establishment.getById(id);
-		return establishment;
+		const order = await Order.getById(id);
+		return order;
 	} catch (error) {
 		return Boom.badImplementation(error, error);
 	}

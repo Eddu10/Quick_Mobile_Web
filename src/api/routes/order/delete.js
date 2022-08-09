@@ -3,7 +3,7 @@
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
 const handler = require('../../handlers/order/delete');
-const pre = require('../../pre/establishment');
+//const pre = require('../../pre/order');
 
 const unauthorizedModel = Joi.object({
 	statusCode: Joi.number(),
@@ -43,19 +43,19 @@ const route = {
 	method: 'DELETE',
 	path: '/{id}',
 	options: {
-		description: 'Delete establishment',
-		notes: 'Deletes an establishment',
+		description: 'Delete order',
+		notes: 'Deletes an order',
 		plugins: {
 			'hapi-swagger': {
 				responses: resultHTTPStatus,
 			},
 		},
 		tags: ['api'],
-		pre: [
-			{
-				method: pre.validateById,
-			},
-		],
+		// pre: [
+		// 	{
+		// 		method: pre.validateById,
+		// 	},
+		// ],
 		validate: {
 			failAction,
 			params: Joi.object({

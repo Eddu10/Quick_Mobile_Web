@@ -10,8 +10,7 @@ const resultModel = Joi.array()
 			id: Joi.number(),
 			username: Joi.string(),
 			email: Joi.string(),
-			group: Joi.string(),
-			description: Joi.string(),
+			phone_number: Joi.string(),
 		}).label('User'),
 	)
 	.label('Users');
@@ -56,7 +55,7 @@ const route = {
 	path: '/',
 	options: {
 		description: 'List users',
-		notes: 'Returns a list of users filtered by params',
+		notes: 'Returns a list of users',
 		plugins: {
 			'hapi-swagger': {
 				responses: resultHTTPStatus,
@@ -68,8 +67,7 @@ const route = {
 			query: Joi.object({
 				username: Joi.string()
 					.allow(null)
-					.description('This is a description'),
-				group: Joi.string().allow(null),
+					.description('This is a description')
 			}),
 		},
 	},

@@ -3,13 +3,12 @@
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
 const handler = require('../../handlers/user/create');
-const pre = require('../../pre/user');
+//const pre = require('../../pre/user');
 
 const resultModel = Joi.object({
 	username: Joi.string(),
 	email: Joi.string(),
-	group: Joi.string(),
-	description: Joi.string(),
+	phone_number: Joi.string(),
 	deletedAt: Joi.string(),
 	flagActive: Joi.boolean(),
 	createdAt: Joi.string(),
@@ -75,11 +74,11 @@ const route = {
 				payloadType: 'form',
 			},
 		},
-		pre: [
-			{
-				method: pre.validateByUsername,
-			},
-		],
+		// pre: [
+		// 	{
+		// 		method: pre.validateByUsername,
+		// 	},
+		// ],
 		validate: {
 			failAction,
 			payload: Joi.object({
@@ -92,7 +91,6 @@ const route = {
 					.email({ tlds: { allow: false } })
 					.required(),
 				group: Joi.string(),
-				description: Joi.string(),
 			}).with('password', 'confirmPassword'),
 		},
 	},

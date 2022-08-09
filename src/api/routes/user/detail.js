@@ -3,15 +3,13 @@
 const Joi = require('joi');
 const { failAction } = require('../../shared/httpHelper');
 const handler = require('../../handlers/user/detail');
-const pre = require('../../pre/user');
+//const pre = require('../../pre/user');
 
 const resultModel = Joi.object({
 	id: Joi.number(),
 	username: Joi.string(),
 	email: Joi.string(),
-	group: Joi.string(),
-	description: Joi.string(),
-	companyId: Joi.number(),
+	phone_number: Joi.string(),
 	flagActive: Joi.boolean(),
 	deletedAt: Joi.string(),
 	createdAt: Joi.string(),
@@ -65,11 +63,11 @@ const route = {
 			},
 		},
 		tags: ['api'],
-		pre: [
-			{
-				method: pre.validateById,
-			},
-		],
+		// pre: [
+		// 	{
+		// 		method: pre.validateById,
+		// 	},
+		// ],
 		validate: {
 			failAction,
 			params: Joi.object({

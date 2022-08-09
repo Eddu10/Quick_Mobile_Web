@@ -40,35 +40,18 @@ const plugins = [
 		},
 	},
 	{
-		plugin: loginRoute,
-		routes: {
-			prefix: '/login',
-		},
-	},
-	{
-		plugin: companyRoute,
-		routes: {
-			prefix: '/company',
-		},
-	},
-	{
 		plugin: orderRoute,
 		routes: {
 			prefix: '/order',
 		},
 	},
 	{
-		plugin: electronicDocumentRoute,
+		plugin: productRoute,
 		routes: {
-			prefix: '/electronicDocument',
+			prefix: '/product',
 		},
 	},
-	{
-		plugin: digitalCertRoute,
-		routes: {
-			prefix: '/digitalCert',
-		},
-	},
+	
 ];
 
 module.exports = plugins;
